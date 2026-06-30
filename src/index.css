@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+/* ===== Dark Trading Desk Theme ===== */
+@theme {
+  /* Surface */
+  --color-bg-primary: #0A0E14;
+  --color-bg-surface: #131820;
+  --color-bg-elevated: #1A2330;
+  --color-bg-overlay: #1F2A38;
+
+  /* Text */
+  --color-text-primary: #E6EDF3;
+  --color-text-secondary: #8B949E;
+  --color-text-muted: #484F58;
+
+  /* Accent */
+  --color-accent-green: #00E676;
+  --color-accent-red: #FF5252;
+  --color-accent-blue: #4FC3F7;
+  --color-accent-amber: #FFB74D;
+
+  /* Border */
+  --color-border: #21262D;
+  --color-border-active: #30363D;
+
+  /* Typography */
+  --font-mono: 'Geist Mono', ui-monospace, Consolas, monospace;
+  --font-sans: 'Geist Sans', system-ui, 'Segoe UI', sans-serif;
+
+  /* Animation */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ===== Base Styles ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text-primary);
+  background: var(--color-bg-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-active);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* ===== Utility ===== */
+.font-mono {
+  font-family: var(--font-mono);
+}
