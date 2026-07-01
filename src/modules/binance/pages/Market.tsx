@@ -20,12 +20,13 @@ export function BinanceMarket() {
   const [activeTab, setActiveTab] = useState<EventTab>('bars')
   const symbol = selected?.symbol ?? ''
 
-  const { data: ticks, dataUpdatedAt: ta } = useTicks(symbol)
-  const { data: bars, isLoading: bl, dataUpdatedAt: ba } = useBars(symbol)
-  const { data: depth, isLoading: dl, dataUpdatedAt: da } = useDepth(symbol)
-  const { data: trades, isLoading: trl, dataUpdatedAt: tra } = useTrades(symbol)
-  const { data: fundingRates } = useFundingRate(symbol)
-  const { data: markPrices } = useMarkPrice(symbol)
+  const pl = selected?.line ?? 'spot'
+  const { data: ticks, dataUpdatedAt: ta } = useTicks(symbol, pl)
+  const { data: bars, isLoading: bl, dataUpdatedAt: ba } = useBars(symbol, pl)
+  const { data: depth, isLoading: dl, dataUpdatedAt: da } = useDepth(symbol, pl)
+  const { data: trades, isLoading: trl, dataUpdatedAt: tra } = useTrades(symbol, pl)
+  const { data: fundingRates } = useFundingRate(symbol, pl)
+  const { data: markPrices } = useMarkPrice(symbol, pl)
 
   const lastPrice = useMemo(() => {
     if (ticks?.length) return ticks[ticks.length - 1].price
