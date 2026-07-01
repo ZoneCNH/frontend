@@ -11,6 +11,7 @@ pnpm build
 echo "=== Deploying to $TARGET:$REMOTE_PATH ==="
 ssh "$TARGET" "sudo mkdir -p $REMOTE_PATH && sudo chown \$USER $REMOTE_PATH"
 scp -r dist/* "$TARGET:$REMOTE_PATH/"
+scp -r ws-relay "$TARGET:$REMOTE_PATH/"
 
 echo "=== Reloading nginx ==="
 ssh "$TARGET" sudo systemctl reload nginx

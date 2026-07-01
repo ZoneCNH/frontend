@@ -1,6 +1,7 @@
 import { useState, useMemo, lazy, Suspense } from 'react'
 import { Activity, Radio, Clock, ShieldAlert } from 'lucide-react'
 import { useMetrics } from '../../../hooks/useMetrics'
+import { useMetricsWs } from '../../../hooks/useWebSocket'
 import { ProductLineFilter, type ProductLine } from '../components/ProductLineFilter'
 
 const EventsChart = lazy(() => import('../components/EventsChart').then(m => ({ default: m.EventsChart })))
@@ -8,6 +9,7 @@ const LatencyChart = lazy(() => import('../components/LatencyChart').then(m => (
 
 export function BinanceDashboard() {
   const { data: metrics, isLoading, isError, error } = useMetrics()
+  const { isConnected: wsConnected, latency: wsLatency } = useMetricsWs()
   const [selectedPl, setSelectedPl] = useState<ProductLine | null>(null)
 
   const chartData = useMemo(() => {
@@ -42,7 +44,17 @@ export function BinanceDashboard() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold text-text-primary">Binance Dashboard</h1>
+        <div className="flex items-center gap-3">
+          <h1 className="text-xl font-semibold text-text-primary">Binance Dashboard</h1>
+          <span className={`flex items-center gap-1 rounded px-2 py-0.5 text-[10px] font-medium ${
+            wsConnected ? 'bg-accent-green/15 text-accent-green' : 'bg-text-muted/15 text-text-muted'
+          }`}>
+            <span className={`inline-block h-1.5 w-1.5 rounded-full ${
+              wsConnected ? 'bg-accent-green shadow-[0_0_4px_#00E676]' : 'bg-text-muted'
+            }`} />
+            {wsConnected ? `WS ${wsLatency}ms` : 'polling'}
+          </span>
+        </div>
         <ProductLineFilter lines={[]} selected={selectedPl} onChange={setSelectedPl} />
       </div>
 
