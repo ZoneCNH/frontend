@@ -4,6 +4,7 @@ import { SymbolSearch, type SymbolEntry } from '../components/SymbolSearch'
 import { DepthChart } from '../components/DepthChart'
 import { TradesTable } from '../components/TradesTable'
 import { useTicks, useBars, useDepth, useTrades, useFundingRate, useMarkPrice } from '../../../hooks/useMarketData'
+import { useMarketWs } from '../../../hooks/useMarketWs'
 
 const PriceChart = lazy(() => import('../components/PriceChart').then(m => ({ default: m.PriceChart })))
 const TickerLine = lazy(() => import('../components/TickerLine').then(m => ({ default: m.TickerLine })))
@@ -27,6 +28,7 @@ export function BinanceMarket() {
   const { data: trades, isLoading: trl, dataUpdatedAt: tra } = useTrades(symbol, pl)
   const { data: fundingRates } = useFundingRate(symbol, pl)
   const { data: markPrices } = useMarkPrice(symbol, pl)
+  const { price: wsPrice, isLive: wsLive } = useMarketWs(pl + ':' + symbol)
 
   const lastPrice = useMemo(() => {
     if (ticks?.length) return ticks[ticks.length - 1].price
@@ -46,6 +48,12 @@ export function BinanceMarket() {
           <span className="font-mono text-lg font-semibold text-text-primary">{selected.symbol}</span>
           <span className="rounded bg-bg-elevated px-2 py-0.5 text-xs text-text-muted">{selected.line}</span>
           {lastPrice != null && <span className="font-mono text-lg text-accent-blue">${lastPrice.toLocaleString()}</span>}
+          {wsPrice != null && (
+            <span className={`flex items-center gap-1 text-xs font-mono ${wsLive ? 'text-accent-green' : 'text-text-muted'}`}>
+              <span className={`inline-block h-1.5 w-1.5 rounded-full ${wsLive ? 'bg-accent-green shadow-[0_0_4px_#00E676]' : 'bg-text-muted'}`} />
+              WS ${wsPrice.toFixed(2)}
+            </span>
+          )}
           {ba > 0 && <Freshness at={ba} />}
           {bars?.length ? <span className="ml-auto text-xs text-text-muted">{bars.length} bars</span> : null}
         </div>
