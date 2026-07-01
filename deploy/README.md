@@ -35,10 +35,10 @@ server {
     add_header X-Frame-Options DENY;
     add_header Referrer-Policy strict-origin-when-cross-origin;
 
-    location /api/   { proxy_pass http://127.0.0.1:8090; }
-    location /healthz { proxy_pass http://127.0.0.1:8090; }
-    location /readyz  { proxy_pass http://127.0.0.1:8090; }
-    location /metrics { proxy_pass http://127.0.0.1:8090; }
+    location /api/   { proxy_pass http://127.0.0.1:8081; }
+    location /healthz { proxy_pass http://127.0.0.1:8081; }
+    location /readyz  { proxy_pass http://127.0.0.1:8081; }
+    location /metrics { proxy_pass http://127.0.0.1:8081; }
 
     root /opt/frontend;
     index index.html;
