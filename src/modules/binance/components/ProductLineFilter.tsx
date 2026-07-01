@@ -1,18 +1,14 @@
 import { cn } from '../../../lib/utils'
-import type { ProductLineMetrics } from '../../../lib/prometheus'
 
 const ALL_PRODUCT_LINES = ['spot', 'um_perp', 'cm_perp', 'options'] as const
 export type ProductLine = (typeof ALL_PRODUCT_LINES)[number]
 
 const PL_LABELS: Record<ProductLine, string> = {
-  spot: 'Spot',
-  um_perp: 'USDⓈ-M',
-  cm_perp: 'COIN-M',
-  options: 'Options',
+  spot: 'Spot', um_perp: 'USDⓈ-M', cm_perp: 'COIN-M', options: 'Options',
 }
 
 type Props = {
-  lines: ProductLineMetrics[]
+  lines: { productLine: string }[]
   selected: ProductLine | null
   onChange: (pl: ProductLine | null) => void
 }
@@ -50,9 +46,7 @@ export function ProductLineFilter({ lines, selected, onChange }: Props) {
         >
           {PL_LABELS[pl]}
           {lines.find(l => l.productLine === pl) && (
-            <span className="ml-1 text-[10px] opacity-60">
-              {lines.find(l => l.productLine === pl)?.streamsActive ?? 0}
-            </span>
+            <span className="ml-1 text-[10px] opacity-60">●</span>
           )}
         </button>
       ))}

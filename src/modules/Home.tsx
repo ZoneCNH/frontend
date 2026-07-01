@@ -10,7 +10,7 @@ export function HomePage() {
   const { data: metrics } = useMetrics()
 
   const isConnected = server?.status === 'healthy'
-  const totalEvents = metrics?.ingestRate ?? 0
+  const totalEvents = metrics ? (metrics.ingestAccepted + metrics.ingestRejected) : 0
 
   return (
     <div className="mx-auto max-w-4xl space-y-8 py-8">

@@ -35,10 +35,10 @@ export function BinanceAlerts() {
   const alerts: Alert[] = metrics ? [
     {
       id: 'a1', metric: 'consumer_lag', condition: '> 1000',
-      severity: (metrics.consumerLag > 1000) ? 'critical' : 'warning',
-      threshold: 1000, currentValue: metrics.consumerLag,
+      severity: 'warning',
+      threshold: 1000, currentValue: metrics.streamLag,
       triggeredAt: new Date().toISOString(), duration: '—',
-      status: metrics.consumerLag > 1000 ? 'active' : 'resolved',
+      status: metrics.streamLag > 1000 ? 'active' : 'resolved',
     },
     {
       id: 'a2', metric: 'rejected_total', condition: 'rate > 5%',
