@@ -1,6 +1,7 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AppLayout } from './components/layout/AppLayout'
 import { getActiveModules } from './modules/registry'
+import { HomePage } from './modules/Home'
 
 // Lazy-load all module pages
 import { BinanceDashboard } from './modules/binance/pages/Dashboard'
@@ -16,8 +17,8 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<AppLayout modules={modules} />}>
-          {/* Root redirects to first active module */}
-          <Route index element={<Navigate to="/binance" replace />} />
+          {/* Home page — module overview */}
+          <Route index element={<HomePage />} />
 
           {/* Binance module */}
           <Route path="binance" element={<BinanceDashboard />} />
